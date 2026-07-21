@@ -1,0 +1,25 @@
+default_platform(:ios)
+
+platform :ios do
+
+  desc "Build the app"
+
+  lane :build do
+    build_app(
+      scheme: "SwiftUICICDDemo"
+    )
+  end
+
+  desc "Upload build to TestFlight"
+
+  lane :beta do
+    build_app(
+      scheme: "SwiftUICICDDemo"
+    )
+
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true
+    )
+  end
+
+end

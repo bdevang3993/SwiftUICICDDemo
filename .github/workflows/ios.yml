@@ -1,4 +1,4 @@
-name: iOS CI
+name: iOS CI/CD
 
 on:
   push:
@@ -7,8 +7,9 @@ on:
     branches: [main]
 
 jobs:
+
   build-and-test:
-    runs-on: macos-latest
+    runs-on: macos-15
 
     steps:
       - name: Checkout Code
@@ -22,16 +23,37 @@ jobs:
       - name: Build App
         run: |
           xcodebuild \
-          -project SwiftUICICDDemo.xcodeproj \
-          -scheme SwiftUICICDDemo \
-          -destination 'platform=iOS Simulator,name=iPhone 17' \
-          clean build
+            -project SwiftUICICDDemo.xcodeproj \
+            -scheme SwiftUICICDDemo \
+            -destination 'platform=iOS Simulator,name=iPhone 17' \
+            clean build
 
-      - name: Run Tests with Code Coverage
+      - name: Run Tests
         run: |
           xcodebuild \
-          test \
-          -enableCodeCoverage YES \
-          -project SwiftUICICDDemo.xcodeproj \
-          -scheme SwiftUICICDDemo \
-          -destination 'platform=iOS Simulator,name=iPhone 17'
+            test \
+            -enableCodeCoverage YES \
+            -project SwiftUICICDDemo.xcodeproj \
+            -scheme SwiftUICICDDemo \
+            -destination 'platform=iOS Simulator,name=iPhone 17'
+
+  deploy:
+    needs: build-and-test
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+
+      - name: Install Fastlane
+        run: gem install fastlane
+
+      - name: Deploy to TestFlight
+        env:
+          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
+        run: fastlane beta
