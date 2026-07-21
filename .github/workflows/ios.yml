@@ -24,7 +24,7 @@ jobs:
           xcodebuild \
           -project SwiftUICICDDemo.xcodeproj \
           -scheme SwiftUICICDDemo \
-          -destination 'platform=iOS Simulator,name=iPhone 16' \
+          -destination 'platform=iOS Simulator,name=iPhone 17' \
           clean build
 
       - name: Run Tests
@@ -33,4 +33,4 @@ jobs:
           test \
           -project SwiftUICICDDemo.xcodeproj \
           -scheme SwiftUICICDDemo \
-          -destination 'platform=iOS Simulator,name=iPhone 16'
+          -destination 'platform=iOS Simulator,name=iPhone 17'
