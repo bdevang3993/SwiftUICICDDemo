@@ -27,7 +27,7 @@ jobs:
           -destination 'platform=iOS Simulator,name=iPhone 17' \
           clean build
 
-      - name: Run Tests
+      - name: Run Tests with Code Coverage
         run: |
           xcodebuild \
           test \

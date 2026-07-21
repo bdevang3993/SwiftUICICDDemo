@@ -10,14 +10,20 @@ import XCTest
 
 final class SwiftUICICDDemoTests: XCTestCase {
     
+//    func testLoginButton() {
+//        XCTAssertTrue(false)
+////           let app = XCUIApplication()
+////           app.launch()
+////
+////           XCTAssertTrue(app.buttons["Login"].exists)
+//       }
     func testLoginButton() {
+        let viewModel = LoginViewModel()
 
-           let app = XCUIApplication()
-           app.launch()
+        let result = viewModel.isValid(email: "test@test.com", password: "123456")
 
-           XCTAssertTrue(app.buttons["Login"].exists)
-       }
-    
+        XCTAssertTrue(result)
+    }
     
     func testAddition() {
 
